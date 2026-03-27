@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playground</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --card: #13131a;
+      --border: #1e1e2e;
+      --accent: #6366f1;
+      --accent2: #a78bfa;
+      --text: #e2e8f0;
+      --muted: #4a4a6a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── CANVAS BACKGROUND ── */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    header h1 {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #6366f1, #a78bfa, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+    }
+
+    header p {
+      color: var(--muted);
+      margin-top: 10px;
+      font-size: 15px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.12);
+    }
+
+    .card h2 {
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent2);
+      margin-bottom: 20px;
+    }
+
+    /* ── PARTICLE DRAW ── */
+    #draw-canvas {
+      width: 100%;
+      height: 220px;
+      border-radius: 12px;
+      background: #0d0d15;
+      cursor: crosshair;
+      display: block;
+    }
+
+    /* ── COLOR MIXER ── */
+    .color-mixer {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slider-row label {
+      width: 14px;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    input[type=range] {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 6px;
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    #r-slider { background: linear-gradient(to right, #000, #ff0000); }
+    #g-slider { background: linear-gradient(to right, #000, #00ff00); }
+    #b-slider { background: linear-gradient(to right, #000, #0000ff); }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #333;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    .color-preview {
+      height: 80px;
+      border-radius: 12px;
+      transition: background 0.1s;
+      border: 1px solid var(--border);
+    }
+
+    .hex-out {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--text);
+      font-family: monospace;
+    }
+
+    /* ── GRAVITY BALLS ── */
+    #gravity-canvas {
+      width: 100%;
+      height: 220px;
+      border-radius: 12px;
+      background: #0d0d15;
+      cursor: pointer;
+      display: block;
+    }
+
+    /* ── TYPING EFFECT ── */
+    .typewriter-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .type-display {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      min-height: 2.5em;
+      color: #fff;
+      word-break: break-word;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.1em;
+      background: var(--accent);
+      margin-left: 3px;
+      vertical-align: middle;
+      animation: blink 0.8s steps(1) infinite;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .type-input-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type=text], textarea {
+      background: #0d0d15;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      padding: 10px 14px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type=text]:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+
+    input[type=text] { flex: 1; }
+
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button:hover { background: #5254d4; }
+    button:active { transform: scale(0.97); }
+
+    /* ── CLOCK ── */
+    .clock-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    #clock-canvas { border-radius: 50%; }
+
+    .digital-time {
+      font-size: 2rem;
+      font-weight: 800;
+      font-family: monospace;
+      letter-spacing: 4px;
+      background: linear-gradient(135deg, #6366f1, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── SOUND VISUALIZER ── */
+    #viz-canvas {
+      width: 100%;
+      height: 140px;
+      border-radius: 12px;
+      background: #0d0d15;
+      display: block;
+    }
+
+    .viz-controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* ── MATRIX RAIN ── */
+    #matrix-canvas {
+      width: 100%;
+      height: 220px;
+      border-radius: 12px;
+      display: block;
+      cursor: pointer;
+    }
+
+    /* ── SNOW ── */
+    #snow-canvas {
+      width: 100%;
+      height: 220px;
+      border-radius: 12px;
+      background: #0d1020;
+      display: block;
+    }
+
+    /* ── TEXT SCRAMBLE ── */
+    .scramble-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .scramble-display {
+      font-family: monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #4ade80;
+      min-height: 2em;
+      word-break: break-all;
+    }
+
+    .scramble-input-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Full-width card */
+    .full { grid-column: 1 / -1; }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="content">
+  <header>
+    <h1>Playground</h1>
+    <p>A collection of interactive experiments</p>
+  </header>
+
+  <div class="grid">
+
+    <!-- 1. PARTICLE DRAW -->
+    <div class="card">
+      <h2>Particle Draw</h2>
+      <canvas id="draw-canvas"></canvas>
+      <div style="display:flex;gap:10px;margin-top:14px;">
+        <button onclick="clearDraw()">Clear</button>
+        <input type="color" id="draw-color" value="#6366f1"
+          style="width:44px;height:38px;border:none;border-radius:8px;cursor:pointer;background:none;">
+        <input type="range" id="brush-size" min="2" max="30" value="8" style="flex:1;background:#1e1e2e;">
+      </div>
+      <p class="tag">Draw with your mouse. Color + size controls below.</p>
+    </div>
+
+    <!-- 2. ANALOG + DIGITAL CLOCK -->
+    <div class="card">
+      <h2>Live Clock</h2>
+      <div class="clock-wrap">
+        <canvas id="clock-canvas" width="180" height="180"></canvas>
+        <div class="digital-time" id="digital-time">00:00:00</div>
+      </div>
+    </div>
+
+    <!-- 3. RGB COLOR MIXER -->
+    <div class="card">
+      <h2>RGB Mixer</h2>
+      <div class="color-mixer">
+        <div class="slider-row">
+          <label style="color:#f87171">R</label>
+          <input type="range" id="r-slider" min="0" max="255" value="99" oninput="updateColor()">
+          <span id="r-val" style="width:30px;text-align:right;font-size:13px;color:#aaa">99</span>
+        </div>
+        <div class="slider-row">
+          <label style="color:#4ade80">G</label>
+          <input type="range" id="g-slider" min="0" max="255" value="102" oninput="updateColor()">
+          <span id="g-val" style="width:30px;text-align:right;font-size:13px;color:#aaa">102</span>
+        </div>
+        <div class="slider-row">
+          <label style="color:#60a5fa">B</label>
+          <input type="range" id="b-slider" min="0" max="255" value="241" oninput="updateColor()">
+          <span id="b-val" style="width:30px;text-align:right;font-size:13px;color:#aaa">241</span>
+        </div>
+        <div class="color-preview" id="color-preview"></div>
+        <div class="hex-out" id="hex-out">#6366F1</div>
+      </div>
+    </div>
+
+    <!-- 4. GRAVITY BALLS -->
+    <div class="card">
+      <h2>Gravity Balls</h2>
+      <canvas id="gravity-canvas"></canvas>
+      <p class="tag">Click the canvas to spawn a ball.</p>
+    </div>
+
+    <!-- 5. TYPEWRITER -->
+    <div class="card">
+      <h2>Typewriter</h2>
+      <div class="typewriter-wrap">
+        <div class="type-display" id="type-display"><span class="cursor"></span></div>
+        <div class="type-input-row">
+          <input type="text" id="type-input" placeholder="Type something and hit go..." />
+          <button onclick="startType()">Go</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. TEXT SCRAMBLE -->
+    <div class="card">
+      <h2>Text Scramble</h2>
+      <div class="scramble-wrap">
+        <div class="scramble-display" id="scramble-display">Click scramble</div>
+        <div class="scramble-input-row">
+          <input type="text" id="scramble-input" placeholder="Enter text..." style="flex:1" />
+          <button onclick="startScramble()">Scramble</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. MATRIX RAIN -->
+    <div class="card">
+      <h2>Matrix Rain</h2>
+      <canvas id="matrix-canvas"></canvas>
+      <p class="tag">Click to toggle on/off.</p>
+    </div>
+
+    <!-- 8. SNOW -->
+    <div class="card">
+      <h2>Snow Globe</h2>
+      <canvas id="snow-canvas"></canvas>
+      <div style="display:flex;gap:10px;margin-top:14px;align-items:center;">
+        <label style="font-size:13px;color:var(--muted)">Intensity</label>
+        <input type="range" id="snow-intensity" min="10" max="400" value="120" style="flex:1;background:#1e1e2e;">
+      </div>
+    </div>
+
+    <!-- 9. AUDIO VISUALIZER (full width) -->
+    <div class="card full">
+      <h2>Microphone Visualizer</h2>
+      <canvas id="viz-canvas"></canvas>
+      <div class="viz-controls">
+        <button id="viz-btn" onclick="toggleViz()">Enable Mic</button>
+        <input type="range" id="viz-gain" min="1" max="10" value="3" style="flex:1;background:#1e1e2e;">
+        <label style="font-size:13px;color:var(--muted);align-self:center">Gain</label>
+      </div>
+      <p class="tag">Requires microphone permission.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════
+   ANIMATED PARTICLE BACKGROUND
+════════════════════════════════════════════ */
+(function() {
+  const c = document.getElementById('bg-canvas');
+  const ctx = c.getContext('2d');
+  let W, H, pts = [];
+
+  function resize() {
+    W = c.width = window.innerWidth;
+    H = c.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < 60; i++) {
+    pts.push({
+      x: Math.random() * 2000, y: Math.random() * 1200,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 2 + 0.5,
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    pts.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(99,102,241,0.4)';
+      ctx.fill();
+    });
+    // Connect nearby dots
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d < 120) {
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x, pts[i].y);
+          ctx.lineTo(pts[j].x, pts[j].y);
+          ctx.strokeStyle = `rgba(99,102,241,${0.15 * (1 - d/120)})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ════════════════════════════════════════════
+   PARTICLE DRAW
+════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('draw-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+
+  let drawing = false, last = null;
+  const particles = [];
+
+  canvas.addEventListener('mousedown', e => { drawing = true; last = pos(e); });
+  canvas.addEventListener('mouseup', () => { drawing = false; last = null; });
+  canvas.addEventListener('mouseleave', () => { drawing = false; last = null; });
+  canvas.addEventListener('mousemove', e => {
+    if (!drawing) return;
+    const p = pos(e);
+    const color = document.getElementById('draw-color').value;
+    const size = +document.getElementById('brush-size').value;
+
+    ctx.beginPath();
+    ctx.moveTo(last.x, last.y);
+    ctx.lineTo(p.x, p.y);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = size;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+
+    // Spawn particles
+    for (let i = 0; i < 3; i++) {
+      particles.push({
+        x: p.x, y: p.y,
+        vx: (Math.random()-0.5)*3,
+        vy: (Math.random()-0.5)*3,
+        life: 1,
+        color,
+        r: Math.random()*4+1
+      });
+    }
+    last = p;
+  });
+
+  function pos(e) {
+    const r = canvas.getBoundingClientRect();
+    return { x: e.clientX - r.left, y: e.clientY - r.top };
+  }
+
+  window.clearDraw = () => ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Animate particles
+  function tick() {
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      p.life -= 0.04;
+      if (p.life <= 0) { particles.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI*2);
+      ctx.fillStyle = p.color + Math.floor(p.life * 99).toString(16).padStart(2,'0');
+      ctx.fill();
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ════════════════════════════════════════════
+   ANALOG CLOCK
+════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('clock-canvas');
+  const ctx = canvas.getContext('2d');
+  const R = 90;
+
+  function drawClock() {
+    const now = new Date();
+    const s = now.getSeconds(), m = now.getMinutes(), h = now.getHours() % 12;
+
+    ctx.clearRect(0,0,180,180);
+
+    // Face
+    ctx.beginPath();
+    ctx.arc(90,90,R,0,Math.PI*2);
+    ctx.fillStyle = '#0d0d15';
+    ctx.fill();
+    ctx.strokeStyle = '#6366f1';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // Tick marks
+    for (let i = 0; i < 12; i++) {
+      const a = (i / 12) * Math.PI * 2 - Math.PI/2;
+      const x1 = 90 + Math.cos(a)*(R-8), y1 = 90 + Math.sin(a)*(R-8);
+      const x2 = 90 + Math.cos(a)*(R-2), y2 = 90 + Math.sin(a)*(R-2);
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
+      ctx.strokeStyle = '#4a4a6a'; ctx.lineWidth = 2; ctx.stroke();
+    }
+
+    function hand(angle, len, width, color) {
+      ctx.beginPath();
+      ctx.moveTo(90,90);
+      ctx.lineTo(90 + Math.cos(angle)*len, 90 + Math.sin(angle)*len);
+      ctx.strokeStyle = color; ctx.lineWidth = width; ctx.lineCap='round'; ctx.stroke();
+    }
+
+    hand((h/12)*Math.PI*2 + (m/60)*Math.PI/6 - Math.PI/2, 50, 5, '#e2e8f0');
+    hand((m/60)*Math.PI*2 + (s/60)*Math.PI/30 - Math.PI/2, 68, 3, '#a78bfa');
+    hand((s/60)*Math.PI*2 - Math.PI/2, 75, 1.5, '#f43f5e');
+
+    // Center dot
+    ctx.beginPath(); ctx.arc(90,90,4,0,Math.PI*2);
+    ctx.fillStyle='#6366f1'; ctx.fill();
+
+    // Digital
+    const pad = n => String(n).padStart(2,'0');
+    document.getElementById('digital-time').textContent =
+      `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+  }
+
+  setInterval(drawClock, 1000);
+  drawClock();
+})();
+
+/* ════════════════════════════════════════════
+   RGB COLOR MIXER
+════════════════════════════════════════════ */
+function updateColor() {
+  const r = +document.getElementById('r-slider').value;
+  const g = +document.getElementById('g-slider').value;
+  const b = +document.getElementById('b-slider').value;
+  document.getElementById('r-val').textContent = r;
+  document.getElementById('g-val').textContent = g;
+  document.getElementById('b-val').textContent = b;
+  const hex = '#' + [r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();
+  document.getElementById('color-preview').style.background = `rgb(${r},${g},${b})`;
+  document.getElementById('hex-out').textContent = hex;
+}
+updateColor();
+
+/* ════════════════════════════════════════════
+   GRAVITY BALLS
+════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('gravity-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  const W = canvas.width, H = canvas.height;
+  const balls = [];
+  const COLORS = ['#6366f1','#a78bfa','#38bdf8','#f43f5e','#4ade80','#fb923c'];
+
+  canvas.addEventListener('click', e => {
+    const r = canvas.getBoundingClientRect();
+    balls.push({
+      x: e.clientX - r.left,
+      y: e.clientY - r.top,
+      vx: (Math.random()-0.5)*6,
+      vy: -6,
+      r: Math.random()*18+10,
+      color: COLORS[Math.floor(Math.random()*COLORS.length)],
+      bounce: 0.7 + Math.random()*0.15,
+    });
+  });
+
+  function tick() {
+    ctx.clearRect(0,0,W,H);
+    balls.forEach(b => {
+      b.vy += 0.4; // gravity
+      b.x += b.vx; b.y += b.vy;
+
+      if (b.y + b.r > H) { b.y = H - b.r; b.vy *= -b.bounce; b.vx *= 0.97; }
+      if (b.x - b.r < 0) { b.x = b.r; b.vx *= -0.8; }
+      if (b.x + b.r > W) { b.x = W - b.r; b.vx *= -0.8; }
+
+      const g = ctx.createRadialGradient(b.x-b.r*0.3, b.y-b.r*0.3, 1, b.x, b.y, b.r);
+      g.addColorStop(0, '#fff');
+      g.addColorStop(0.4, b.color);
+      g.addColorStop(1, b.color+'44');
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+      ctx.fillStyle = g;
+      ctx.shadowColor = b.color;
+      ctx.shadowBlur = 15;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    });
+    if (balls.length > 40) balls.shift();
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ════════════════════════════════════════════
+   TYPEWRITER
+════════════════════════════════════════════ */
+let typeTimer = null;
+function startType() {
+  const text = document.getElementById('type-input').value.trim();
+  if (!text) return;
+  clearInterval(typeTimer);
+  const el = document.getElementById('type-display');
+  el.innerHTML = '<span class="cursor"></span>';
+  let i = 0;
+  typeTimer = setInterval(() => {
+    if (i >= text.length) { clearInterval(typeTimer); return; }
+    el.innerHTML = text.slice(0, ++i) + '<span class="cursor"></span>';
+  }, 60);
+}
+document.getElementById('type-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') startType();
+});
+
+/* ════════════════════════════════════════════
+   TEXT SCRAMBLE
+════════════════════════════════════════════ */
+const CHARS = '!@#$%^&*<>?/\\|[]{}ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+function startScramble() {
+  const target = document.getElementById('scramble-input').value.trim() || 'Hello World';
+  const el = document.getElementById('scramble-display');
+  let iteration = 0;
+  const max = target.length * 8;
+  const interval = setInterval(() => {
+    el.textContent = target.split('').map((ch, i) => {
+      if (i < Math.floor(iteration / 8)) return ch;
+      return CHARS[Math.floor(Math.random() * CHARS.length)];
+    }).join('');
+    if (++iteration > max) { el.textContent = target; clearInterval(interval); }
+  }, 30);
+}
+
+/* ════════════════════════════════════════════
+   MATRIX RAIN
+════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('matrix-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  const W = canvas.width, H = canvas.height;
+  const cols = Math.floor(W / 16);
+  const drops = Array(cols).fill(0);
+  let running = true;
+
+  canvas.addEventListener('click', () => { running = !running; });
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0,13,2,0.05)';
+    ctx.fillRect(0,0,W,H);
+    ctx.fillStyle = '#0f0';
+    ctx.font = '14px monospace';
+    drops.forEach((y, i) => {
+      const ch = String.fromCharCode(0x30A0 + Math.random()*96);
+      ctx.fillStyle = y === 1 ? '#aaffaa' : '#00ff41';
+      ctx.fillText(ch, i*16, y*16);
+      if (y*16 > H && Math.random() > 0.975) drops[i] = 0;
+      else drops[i]++;
+    });
+    setTimeout(() => { if (running) requestAnimationFrame(draw); }, 40);
+  }
+
+  // Toggle
+  canvas.addEventListener('click', () => {
+    if (running) { running = false; }
+    else { running = true; draw(); }
+  });
+  draw();
+})();
+
+/* ════════════════════════════════════════════
+   SNOW
+════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('snow-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  const W = canvas.width, H = canvas.height;
+  let flakes = [];
+
+  function makeFlake() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * -H,
+      r: Math.random() * 4 + 1,
+      speed: Math.random() * 1.5 + 0.5,
+      drift: (Math.random() - 0.5) * 0.5,
+      opacity: Math.random() * 0.6 + 0.4,
+    };
+  }
+
+  function syncFlakes() {
+    const target = +document.getElementById('snow-intensity').value;
+    while (flakes.length < target) flakes.push(makeFlake());
+    if (flakes.length > target) flakes.length = target;
+  }
+  syncFlakes();
+  document.getElementById('snow-intensity').addEventListener('input', syncFlakes);
+
+  // Ground accumulation
+  const ground = new Array(W).fill(H);
+
+  function tick() {
+    ctx.clearRect(0,0,W,H);
+
+    // Sky gradient
+    const sky = ctx.createLinearGradient(0,0,0,H);
+    sky.addColorStop(0,'#0d1020'); sky.addColorStop(1,'#1a2050');
+    ctx.fillStyle = sky; ctx.fillRect(0,0,W,H);
+
+    // Moon
+    ctx.beginPath(); ctx.arc(W-60, 40, 22, 0, Math.PI*2);
+    ctx.fillStyle='rgba(255,255,220,0.9)'; ctx.fill();
+    ctx.shadowColor='#ffffc0'; ctx.shadowBlur=30; ctx.fill(); ctx.shadowBlur=0;
+
+    // Snow
+    flakes.forEach(f => {
+      f.x += f.drift; f.y += f.speed;
+      if (f.y > H) { f.y = -10; f.x = Math.random()*W; }
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${f.opacity})`;
+      ctx.fill();
+    });
+
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ════════════════════════════════════════════
+   AUDIO VISUALIZER
+════════════════════════════════════════════ */
+let vizActive = false, analyser = null, vizData = null;
+const vizCanvas = document.getElementById('viz-canvas');
+const vizCtx = vizCanvas.getContext('2d');
+vizCanvas.width = vizCanvas.offsetWidth;
+vizCanvas.height = vizCanvas.offsetHeight;
+
+function toggleViz() {
+  if (vizActive) {
+    vizActive = false;
+    document.getElementById('viz-btn').textContent = 'Enable Mic';
+    return;
+  }
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+    const ctx = new AudioContext();
+    analyser = ctx.createAnalyser();
+    analyser.fftSize = 256;
+    ctx.createMediaStreamSource(stream).connect(analyser);
+    vizData = new Uint8Array(analyser.frequencyBinCount);
+    vizActive = true;
+    document.getElementById('viz-btn').textContent = 'Disable Mic';
+    drawViz();
+  }).catch(() => alert('Microphone access denied.'));
+}
+
+function drawViz() {
+  if (!vizActive) return;
+  requestAnimationFrame(drawViz);
+  analyser.getByteFrequencyData(vizData);
+  const W = vizCanvas.width, H = vizCanvas.height;
+  const gain = +document.getElementById('viz-gain').value;
+  vizCtx.clearRect(0,0,W,H);
+  const bw = W / vizData.length;
+  vizData.forEach((v, i) => {
+    const h = Math.min((v / 255) * H * gain, H);
+    const hue = (i / vizData.length) * 280 + 200;
+    vizCtx.fillStyle = `hsl(${hue},80%,60%)`;
+    vizCtx.fillRect(i*bw, H-h, bw-1, h);
+  });
+}
+</script>
+</body>
+</html>
