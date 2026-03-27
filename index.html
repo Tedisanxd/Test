@@ -25,7 +25,6 @@
       overflow-x: hidden;
     }
 
-    /* ── CANVAS BACKGROUND ── */
     #bg-canvas {
       position: fixed;
       inset: 0;
@@ -56,11 +55,7 @@
       letter-spacing: -1px;
     }
 
-    header p {
-      color: var(--muted);
-      margin-top: 10px;
-      font-size: 15px;
-    }
+    header p { color: var(--muted); margin-top: 10px; font-size: 15px; }
 
     .grid {
       display: grid;
@@ -78,7 +73,7 @@
 
     .card:hover {
       border-color: var(--accent);
-      box-shadow: 0 0 30px rgba(99, 102, 241, 0.12);
+      box-shadow: 0 0 30px rgba(99,102,241,0.12);
     }
 
     .card h2 {
@@ -90,34 +85,16 @@
       margin-bottom: 20px;
     }
 
-    /* ── PARTICLE DRAW ── */
-    #draw-canvas {
+    canvas.widget {
       width: 100%;
-      height: 220px;
       border-radius: 12px;
       background: #0d0d15;
-      cursor: crosshair;
       display: block;
     }
 
-    /* ── COLOR MIXER ── */
-    .color-mixer {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .slider-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .slider-row label {
-      width: 14px;
-      font-weight: 700;
-      font-size: 13px;
-    }
+    .color-mixer { display: flex; flex-direction: column; gap: 12px; }
+    .slider-row { display: flex; align-items: center; gap: 12px; }
+    .slider-row label { width: 14px; font-weight: 700; font-size: 13px; }
 
     input[type=range] {
       flex: 1;
@@ -127,10 +104,9 @@
       outline: none;
       cursor: pointer;
     }
-
-    #r-slider { background: linear-gradient(to right, #000, #ff0000); }
-    #g-slider { background: linear-gradient(to right, #000, #00ff00); }
-    #b-slider { background: linear-gradient(to right, #000, #0000ff); }
+    #r-slider { background: linear-gradient(to right, #000, #f00); }
+    #g-slider { background: linear-gradient(to right, #000, #0f0); }
+    #b-slider { background: linear-gradient(to right, #000, #00f); }
 
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
@@ -138,13 +114,13 @@
       border-radius: 50%;
       background: #fff;
       border: 2px solid #333;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      box-shadow: 0 2px 6px rgba(0,0,0,.5);
     }
 
     .color-preview {
       height: 80px;
       border-radius: 12px;
-      transition: background 0.1s;
+      transition: background .1s;
       border: 1px solid var(--border);
     }
 
@@ -153,92 +129,10 @@
       font-size: 20px;
       font-weight: 700;
       letter-spacing: 3px;
-      color: var(--text);
       font-family: monospace;
     }
 
-    /* ── GRAVITY BALLS ── */
-    #gravity-canvas {
-      width: 100%;
-      height: 220px;
-      border-radius: 12px;
-      background: #0d0d15;
-      cursor: pointer;
-      display: block;
-    }
-
-    /* ── TYPING EFFECT ── */
-    .typewriter-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .type-display {
-      font-size: clamp(1.4rem, 4vw, 2rem);
-      font-weight: 700;
-      min-height: 2.5em;
-      color: #fff;
-      word-break: break-word;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 3px;
-      height: 1.1em;
-      background: var(--accent);
-      margin-left: 3px;
-      vertical-align: middle;
-      animation: blink 0.8s steps(1) infinite;
-    }
-
-    @keyframes blink { 50% { opacity: 0; } }
-
-    .type-input-row {
-      display: flex;
-      gap: 10px;
-    }
-
-    input[type=text], textarea {
-      background: #0d0d15;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--text);
-      padding: 10px 14px;
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    input[type=text]:focus, textarea:focus {
-      border-color: var(--accent);
-    }
-
-    input[type=text] { flex: 1; }
-
-    button {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 10px 18px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-    }
-
-    button:hover { background: #5254d4; }
-    button:active { transform: scale(0.97); }
-
-    /* ── CLOCK ── */
-    .clock-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-
+    .clock-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; }
     #clock-canvas { border-radius: 50%; }
 
     .digital-time {
@@ -252,52 +146,61 @@
       background-clip: text;
     }
 
-    /* ── SOUND VISUALIZER ── */
-    #viz-canvas {
-      width: 100%;
-      height: 140px;
-      border-radius: 12px;
+    .typewriter-wrap { display: flex; flex-direction: column; gap: 16px; }
+
+    .type-display {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      min-height: 2.5em;
+      color: #fff;
+      word-break: break-word;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 3px; height: 1.1em;
+      background: var(--accent);
+      margin-left: 3px;
+      vertical-align: middle;
+      animation: blink .8s steps(1) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .type-input-row { display: flex; gap: 10px; }
+
+    input[type=text] {
       background: #0d0d15;
-      display: block;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      padding: 10px 14px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s;
+      flex: 1;
     }
+    input[type=text]:focus { border-color: var(--accent); }
 
-    .viz-controls {
-      display: flex;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .tag {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 8px;
-    }
-
-    /* ── MATRIX RAIN ── */
-    #matrix-canvas {
-      width: 100%;
-      height: 220px;
-      border-radius: 12px;
-      display: block;
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
+      transition: background .2s, transform .1s;
+      white-space: nowrap;
     }
+    button:hover { background: #5254d4; }
+    button:active { transform: scale(.97); }
+    button.danger { background: #dc2626; }
+    button.danger:hover { background: #b91c1c; }
+    button.success { background: #16a34a; }
+    button.success:hover { background: #15803d; }
 
-    /* ── SNOW ── */
-    #snow-canvas {
-      width: 100%;
-      height: 220px;
-      border-radius: 12px;
-      background: #0d1020;
-      display: block;
-    }
-
-    /* ── TEXT SCRAMBLE ── */
-    .scramble-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
+    .scramble-wrap { display: flex; flex-direction: column; gap: 16px; }
     .scramble-display {
       font-family: monospace;
       font-size: 1.5rem;
@@ -307,13 +210,41 @@
       word-break: break-all;
     }
 
-    .scramble-input-row {
+    .viz-controls { display: flex; gap: 10px; margin-top: 14px; align-items: center; }
+    .tag { font-size: 11px; color: var(--muted); margin-top: 8px; }
+
+    .full { grid-column: 1 / -1; }
+
+    /* Race leaderboard */
+    #race-board {
       display: flex;
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .racer-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #0d0d15;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .racer-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
     }
 
-    /* Full-width card */
-    .full { grid-column: 1 / -1; }
+    /* GOL */
+    #gol-canvas { cursor: crosshair; }
+    .gol-controls { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+
+    /* Lissajous */
+    .lis-controls { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; align-items: center; }
+    .lis-controls label { font-size: 12px; color: var(--muted); }
   </style>
 </head>
 <body>
@@ -331,17 +262,17 @@
     <!-- 1. PARTICLE DRAW -->
     <div class="card">
       <h2>Particle Draw</h2>
-      <canvas id="draw-canvas"></canvas>
+      <canvas id="draw-canvas" class="widget" style="height:220px;cursor:crosshair;"></canvas>
       <div style="display:flex;gap:10px;margin-top:14px;">
         <button onclick="clearDraw()">Clear</button>
         <input type="color" id="draw-color" value="#6366f1"
           style="width:44px;height:38px;border:none;border-radius:8px;cursor:pointer;background:none;">
         <input type="range" id="brush-size" min="2" max="30" value="8" style="flex:1;background:#1e1e2e;">
       </div>
-      <p class="tag">Draw with your mouse. Color + size controls below.</p>
+      <p class="tag">Draw with mouse. Pick color + brush size.</p>
     </div>
 
-    <!-- 2. ANALOG + DIGITAL CLOCK -->
+    <!-- 2. CLOCK -->
     <div class="card">
       <h2>Live Clock</h2>
       <div class="clock-wrap">
@@ -350,7 +281,7 @@
       </div>
     </div>
 
-    <!-- 3. RGB COLOR MIXER -->
+    <!-- 3. RGB MIXER -->
     <div class="card">
       <h2>RGB Mixer</h2>
       <div class="color-mixer">
@@ -374,11 +305,14 @@
       </div>
     </div>
 
-    <!-- 4. GRAVITY BALLS -->
+    <!-- 4. GRAVITY BALLS (with collision) -->
     <div class="card">
       <h2>Gravity Balls</h2>
-      <canvas id="gravity-canvas"></canvas>
-      <p class="tag">Click the canvas to spawn a ball.</p>
+      <canvas id="gravity-canvas" class="widget" style="height:260px;cursor:pointer;"></canvas>
+      <div style="display:flex;gap:10px;margin-top:14px;">
+        <button onclick="gravityBalls.clear()">Clear</button>
+      </div>
+      <p class="tag">Click to spawn a ball. Balls collide with each other.</p>
     </div>
 
     <!-- 5. TYPEWRITER -->
@@ -398,40 +332,78 @@
       <h2>Text Scramble</h2>
       <div class="scramble-wrap">
         <div class="scramble-display" id="scramble-display">Click scramble</div>
-        <div class="scramble-input-row">
-          <input type="text" id="scramble-input" placeholder="Enter text..." style="flex:1" />
+        <div style="display:flex;gap:10px;">
+          <input type="text" id="scramble-input" placeholder="Enter text..." />
           <button onclick="startScramble()">Scramble</button>
         </div>
       </div>
     </div>
 
-    <!-- 7. MATRIX RAIN -->
+    <!-- 7. FIREWORKS -->
     <div class="card">
-      <h2>Matrix Rain</h2>
-      <canvas id="matrix-canvas"></canvas>
-      <p class="tag">Click to toggle on/off.</p>
+      <h2>Fireworks</h2>
+      <canvas id="fireworks-canvas" class="widget" style="height:260px;cursor:crosshair;"></canvas>
+      <p class="tag">Click anywhere on the canvas to launch a firework.</p>
     </div>
 
     <!-- 8. SNOW -->
     <div class="card">
       <h2>Snow Globe</h2>
-      <canvas id="snow-canvas"></canvas>
+      <canvas id="snow-canvas" class="widget" style="height:220px;background:#0d1020;"></canvas>
       <div style="display:flex;gap:10px;margin-top:14px;align-items:center;">
         <label style="font-size:13px;color:var(--muted)">Intensity</label>
         <input type="range" id="snow-intensity" min="10" max="400" value="120" style="flex:1;background:#1e1e2e;">
       </div>
     </div>
 
-    <!-- 9. AUDIO VISUALIZER (full width) -->
+    <!-- 9. LISSAJOUS CURVES -->
+    <div class="card">
+      <h2>Lissajous Curves</h2>
+      <canvas id="lis-canvas" class="widget" style="height:260px;background:#030308;"></canvas>
+      <div class="lis-controls">
+        <label>A <input type="range" id="lis-a" min="1" max="8" value="3" style="width:80px;background:#1e1e2e;"> <span id="lis-a-val">3</span></label>
+        <label>B <input type="range" id="lis-b" min="1" max="8" value="2" style="width:80px;background:#1e1e2e;"> <span id="lis-b-val">2</span></label>
+        <label>δ <input type="range" id="lis-d" min="0" max="628" value="157" style="width:80px;background:#1e1e2e;"> <span id="lis-d-val">π/2</span></label>
+        <button onclick="lisAnimate = !lisAnimate">Animate</button>
+      </div>
+    </div>
+
+    <!-- 10. CONWAY'S GAME OF LIFE -->
+    <div class="card">
+      <h2>Game of Life</h2>
+      <canvas id="gol-canvas" class="widget" style="height:260px;"></canvas>
+      <div class="gol-controls">
+        <button class="success" onclick="golToggle()">Start</button>
+        <button onclick="golStep()">Step</button>
+        <button onclick="golRandom()">Random</button>
+        <button class="danger" onclick="golClear()">Clear</button>
+      </div>
+      <p class="tag">Click/drag to draw cells. Conway's Game of Life rules.</p>
+    </div>
+
+    <!-- 11. BALL RACE TRACK (full width) -->
+    <div class="card full">
+      <h2>Ball Race Track</h2>
+      <canvas id="race-canvas" class="widget" style="height:340px;background:#080810;"></canvas>
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+        <button onclick="raceAddBall()">Add Racer</button>
+        <button class="danger" onclick="raceReset()">Reset</button>
+        <span style="font-size:13px;color:var(--muted);align-self:center">Up to 8 racers</span>
+      </div>
+      <div id="race-board"></div>
+      <p class="tag">Balls race around the circuit. Click a ball to give it a speed boost!</p>
+    </div>
+
+    <!-- 12. AUDIO VISUALIZER (full width) -->
     <div class="card full">
       <h2>Microphone Visualizer</h2>
-      <canvas id="viz-canvas"></canvas>
+      <canvas id="viz-canvas" class="widget" style="height:140px;"></canvas>
       <div class="viz-controls">
         <button id="viz-btn" onclick="toggleViz()">Enable Mic</button>
         <input type="range" id="viz-gain" min="1" max="10" value="3" style="flex:1;background:#1e1e2e;">
-        <label style="font-size:13px;color:var(--muted);align-self:center">Gain</label>
+        <label style="font-size:13px;color:var(--muted)">Gain</label>
       </div>
-      <p class="tag">Requires microphone permission.</p>
+      <p class="tag">Requires microphone permission. HTTPS only in most browsers.</p>
     </div>
 
   </div>
@@ -444,53 +416,36 @@
 (function() {
   const c = document.getElementById('bg-canvas');
   const ctx = c.getContext('2d');
-  let W, H, pts = [];
+  let W, H;
+  const pts = Array.from({length:60}, () => ({
+    x: Math.random()*2000, y: Math.random()*1200,
+    vx: (Math.random()-.5)*.3, vy: (Math.random()-.5)*.3,
+    r: Math.random()*2+.5,
+  }));
 
-  function resize() {
-    W = c.width = window.innerWidth;
-    H = c.height = window.innerHeight;
-  }
+  function resize() { W = c.width = innerWidth; H = c.height = innerHeight; }
   resize();
-  window.addEventListener('resize', resize);
+  addEventListener('resize', resize);
 
-  for (let i = 0; i < 60; i++) {
-    pts.push({
-      x: Math.random() * 2000, y: Math.random() * 1200,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      r: Math.random() * 2 + 0.5,
-    });
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
+  (function draw() {
+    ctx.clearRect(0,0,W,H);
     pts.forEach(p => {
       p.x += p.vx; p.y += p.vy;
-      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(99,102,241,0.4)';
-      ctx.fill();
+      if (p.x<0) p.x=W; if (p.x>W) p.x=0;
+      if (p.y<0) p.y=H; if (p.y>H) p.y=0;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(99,102,241,.4)'; ctx.fill();
     });
-    // Connect nearby dots
-    for (let i = 0; i < pts.length; i++) {
-      for (let j = i + 1; j < pts.length; j++) {
-        const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
-        const d = Math.sqrt(dx*dx + dy*dy);
-        if (d < 120) {
-          ctx.beginPath();
-          ctx.moveTo(pts[i].x, pts[i].y);
-          ctx.lineTo(pts[j].x, pts[j].y);
-          ctx.strokeStyle = `rgba(99,102,241,${0.15 * (1 - d/120)})`;
-          ctx.lineWidth = 0.8;
-          ctx.stroke();
-        }
+    for (let i=0;i<pts.length;i++) for (let j=i+1;j<pts.length;j++) {
+      const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
+      const d=Math.hypot(dx,dy);
+      if (d<120) {
+        ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y);
+        ctx.strokeStyle=`rgba(99,102,241,${.15*(1-d/120)})`; ctx.lineWidth=.8; ctx.stroke();
       }
     }
     requestAnimationFrame(draw);
-  }
-  draw();
+  })();
 })();
 
 /* ════════════════════════════════════════════
@@ -501,368 +456,567 @@
   const ctx = canvas.getContext('2d');
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
+  let drawing=false, last=null;
+  const particles=[];
 
-  let drawing = false, last = null;
-  const particles = [];
-
-  canvas.addEventListener('mousedown', e => { drawing = true; last = pos(e); });
-  canvas.addEventListener('mouseup', () => { drawing = false; last = null; });
-  canvas.addEventListener('mouseleave', () => { drawing = false; last = null; });
-  canvas.addEventListener('mousemove', e => {
-    if (!drawing) return;
-    const p = pos(e);
-    const color = document.getElementById('draw-color').value;
-    const size = +document.getElementById('brush-size').value;
-
-    ctx.beginPath();
-    ctx.moveTo(last.x, last.y);
-    ctx.lineTo(p.x, p.y);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = size;
-    ctx.lineCap = 'round';
-    ctx.stroke();
-
-    // Spawn particles
-    for (let i = 0; i < 3; i++) {
-      particles.push({
-        x: p.x, y: p.y,
-        vx: (Math.random()-0.5)*3,
-        vy: (Math.random()-0.5)*3,
-        life: 1,
-        color,
-        r: Math.random()*4+1
-      });
-    }
-    last = p;
-  });
-
-  function pos(e) {
+  const getPos = e => {
     const r = canvas.getBoundingClientRect();
-    return { x: e.clientX - r.left, y: e.clientY - r.top };
-  }
+    const src = e.touches ? e.touches[0] : e;
+    return {x: src.clientX-r.left, y: src.clientY-r.top};
+  };
 
-  window.clearDraw = () => ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const start = e => { drawing=true; last=getPos(e); };
+  const end   = () => { drawing=false; last=null; };
+  const move  = e => {
+    if (!drawing) return;
+    e.preventDefault();
+    const p=getPos(e), color=document.getElementById('draw-color').value;
+    const size=+document.getElementById('brush-size').value;
+    ctx.beginPath(); ctx.moveTo(last.x,last.y); ctx.lineTo(p.x,p.y);
+    ctx.strokeStyle=color; ctx.lineWidth=size; ctx.lineCap='round'; ctx.stroke();
+    for (let i=0;i<3;i++) particles.push({x:p.x,y:p.y,vx:(Math.random()-.5)*3,vy:(Math.random()-.5)*3,life:1,color,r:Math.random()*4+1});
+    last=p;
+  };
 
-  // Animate particles
-  function tick() {
-    for (let i = particles.length - 1; i >= 0; i--) {
-      const p = particles[i];
-      p.x += p.vx; p.y += p.vy;
-      p.life -= 0.04;
-      if (p.life <= 0) { particles.splice(i, 1); continue; }
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI*2);
-      ctx.fillStyle = p.color + Math.floor(p.life * 99).toString(16).padStart(2,'0');
-      ctx.fill();
+  canvas.addEventListener('mousedown',start); canvas.addEventListener('mouseup',end);
+  canvas.addEventListener('mouseleave',end); canvas.addEventListener('mousemove',move);
+  canvas.addEventListener('touchstart',start,{passive:false}); canvas.addEventListener('touchend',end);
+  canvas.addEventListener('touchmove',move,{passive:false});
+
+  window.clearDraw = () => ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  (function tick() {
+    for (let i=particles.length-1;i>=0;i--) {
+      const p=particles[i]; p.x+=p.vx; p.y+=p.vy; p.life-=.04;
+      if (p.life<=0){particles.splice(i,1);continue;}
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r*p.life,0,Math.PI*2);
+      ctx.fillStyle=p.color+Math.floor(p.life*99).toString(16).padStart(2,'0'); ctx.fill();
     }
     requestAnimationFrame(tick);
-  }
-  tick();
+  })();
 })();
 
 /* ════════════════════════════════════════════
    ANALOG CLOCK
 ════════════════════════════════════════════ */
 (function() {
-  const canvas = document.getElementById('clock-canvas');
-  const ctx = canvas.getContext('2d');
-  const R = 90;
-
-  function drawClock() {
-    const now = new Date();
-    const s = now.getSeconds(), m = now.getMinutes(), h = now.getHours() % 12;
-
+  const canvas=document.getElementById('clock-canvas'), ctx=canvas.getContext('2d');
+  function draw() {
+    const now=new Date(), s=now.getSeconds(), m=now.getMinutes(), h=now.getHours()%12;
     ctx.clearRect(0,0,180,180);
-
-    // Face
-    ctx.beginPath();
-    ctx.arc(90,90,R,0,Math.PI*2);
-    ctx.fillStyle = '#0d0d15';
-    ctx.fill();
-    ctx.strokeStyle = '#6366f1';
-    ctx.lineWidth = 3;
-    ctx.stroke();
-
-    // Tick marks
-    for (let i = 0; i < 12; i++) {
-      const a = (i / 12) * Math.PI * 2 - Math.PI/2;
-      const x1 = 90 + Math.cos(a)*(R-8), y1 = 90 + Math.sin(a)*(R-8);
-      const x2 = 90 + Math.cos(a)*(R-2), y2 = 90 + Math.sin(a)*(R-2);
-      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
-      ctx.strokeStyle = '#4a4a6a'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.beginPath(); ctx.arc(90,90,89,0,Math.PI*2);
+    ctx.fillStyle='#0d0d15'; ctx.fill();
+    ctx.strokeStyle='#6366f1'; ctx.lineWidth=3; ctx.stroke();
+    for(let i=0;i<12;i++){
+      const a=(i/12)*Math.PI*2-Math.PI/2;
+      ctx.beginPath(); ctx.moveTo(90+Math.cos(a)*81,90+Math.sin(a)*81); ctx.lineTo(90+Math.cos(a)*87,90+Math.sin(a)*87);
+      ctx.strokeStyle='#4a4a6a'; ctx.lineWidth=2; ctx.stroke();
     }
-
-    function hand(angle, len, width, color) {
-      ctx.beginPath();
-      ctx.moveTo(90,90);
-      ctx.lineTo(90 + Math.cos(angle)*len, 90 + Math.sin(angle)*len);
-      ctx.strokeStyle = color; ctx.lineWidth = width; ctx.lineCap='round'; ctx.stroke();
-    }
-
-    hand((h/12)*Math.PI*2 + (m/60)*Math.PI/6 - Math.PI/2, 50, 5, '#e2e8f0');
-    hand((m/60)*Math.PI*2 + (s/60)*Math.PI/30 - Math.PI/2, 68, 3, '#a78bfa');
-    hand((s/60)*Math.PI*2 - Math.PI/2, 75, 1.5, '#f43f5e');
-
-    // Center dot
-    ctx.beginPath(); ctx.arc(90,90,4,0,Math.PI*2);
-    ctx.fillStyle='#6366f1'; ctx.fill();
-
-    // Digital
-    const pad = n => String(n).padStart(2,'0');
-    document.getElementById('digital-time').textContent =
-      `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    const hand=(angle,len,width,color)=>{
+      ctx.beginPath(); ctx.moveTo(90,90);
+      ctx.lineTo(90+Math.cos(angle)*len,90+Math.sin(angle)*len);
+      ctx.strokeStyle=color; ctx.lineWidth=width; ctx.lineCap='round'; ctx.stroke();
+    };
+    hand((h/12)*Math.PI*2+(m/60)*Math.PI/6-Math.PI/2,50,5,'#e2e8f0');
+    hand((m/60)*Math.PI*2+(s/60)*Math.PI/30-Math.PI/2,68,3,'#a78bfa');
+    hand((s/60)*Math.PI*2-Math.PI/2,75,1.5,'#f43f5e');
+    ctx.beginPath(); ctx.arc(90,90,4,0,Math.PI*2); ctx.fillStyle='#6366f1'; ctx.fill();
+    const pad=n=>String(n).padStart(2,'0');
+    document.getElementById('digital-time').textContent=`${pad(now.getHours())}:${pad(m)}:${pad(s)}`;
   }
-
-  setInterval(drawClock, 1000);
-  drawClock();
+  setInterval(draw,1000); draw();
 })();
 
 /* ════════════════════════════════════════════
-   RGB COLOR MIXER
+   RGB MIXER
 ════════════════════════════════════════════ */
 function updateColor() {
-  const r = +document.getElementById('r-slider').value;
-  const g = +document.getElementById('g-slider').value;
-  const b = +document.getElementById('b-slider').value;
-  document.getElementById('r-val').textContent = r;
-  document.getElementById('g-val').textContent = g;
-  document.getElementById('b-val').textContent = b;
-  const hex = '#' + [r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();
-  document.getElementById('color-preview').style.background = `rgb(${r},${g},${b})`;
-  document.getElementById('hex-out').textContent = hex;
+  const r=+document.getElementById('r-slider').value;
+  const g=+document.getElementById('g-slider').value;
+  const b=+document.getElementById('b-slider').value;
+  document.getElementById('r-val').textContent=r;
+  document.getElementById('g-val').textContent=g;
+  document.getElementById('b-val').textContent=b;
+  const hex='#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('').toUpperCase();
+  document.getElementById('color-preview').style.background=`rgb(${r},${g},${b})`;
+  document.getElementById('hex-out').textContent=hex;
 }
 updateColor();
 
 /* ════════════════════════════════════════════
-   GRAVITY BALLS
+   GRAVITY BALLS WITH COLLISION
 ════════════════════════════════════════════ */
-(function() {
+const gravityBalls = (function() {
   const canvas = document.getElementById('gravity-canvas');
   const ctx = canvas.getContext('2d');
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
-  const W = canvas.width, H = canvas.height;
-  const balls = [];
-  const COLORS = ['#6366f1','#a78bfa','#38bdf8','#f43f5e','#4ade80','#fb923c'];
+  const W=canvas.width, H=canvas.height;
+  const balls=[];
+  const COLORS=['#6366f1','#a78bfa','#38bdf8','#f43f5e','#4ade80','#fb923c','#facc15','#ec4899'];
 
   canvas.addEventListener('click', e => {
-    const r = canvas.getBoundingClientRect();
+    if (balls.length >= 40) balls.shift();
+    const r=canvas.getBoundingClientRect();
+    const radius=Math.random()*16+8;
     balls.push({
-      x: e.clientX - r.left,
-      y: e.clientY - r.top,
-      vx: (Math.random()-0.5)*6,
-      vy: -6,
-      r: Math.random()*18+10,
-      color: COLORS[Math.floor(Math.random()*COLORS.length)],
-      bounce: 0.7 + Math.random()*0.15,
+      x:e.clientX-r.left, y:e.clientY-r.top,
+      vx:(Math.random()-.5)*6, vy:-4,
+      r:radius, mass:radius*radius,
+      color:COLORS[balls.length%COLORS.length],
+      bounce:.72+Math.random()*.12,
     });
   });
 
-  function tick() {
+  function resolveCollisions() {
+    for (let i=0;i<balls.length;i++) {
+      for (let j=i+1;j<balls.length;j++) {
+        const a=balls[i], b=balls[j];
+        const dx=b.x-a.x, dy=b.y-a.y;
+        const dist=Math.hypot(dx,dy);
+        const minDist=a.r+b.r;
+        if (dist<minDist && dist>0.001) {
+          // Separate overlapping balls
+          const overlap=(minDist-dist)/2;
+          const nx=dx/dist, ny=dy/dist;
+          const ta=a.mass/(a.mass+b.mass), tb=b.mass/(a.mass+b.mass);
+          a.x-=nx*overlap*(1-ta)*2; a.y-=ny*overlap*(1-ta)*2;
+          b.x+=nx*overlap*(1-tb)*2; b.y+=ny*overlap*(1-tb)*2;
+          // Elastic collision with mass ratio
+          const dvx=a.vx-b.vx, dvy=a.vy-b.vy;
+          const dot=dvx*nx+dvy*ny;
+          if (dot>0) {
+            const restitution=0.78;
+            const impulse=2*dot*restitution/(a.mass+b.mass);
+            a.vx-=impulse*b.mass*nx; a.vy-=impulse*b.mass*ny;
+            b.vx+=impulse*a.mass*nx; b.vy+=impulse*a.mass*ny;
+          }
+        }
+      }
+    }
+  }
+
+  (function tick() {
     ctx.clearRect(0,0,W,H);
     balls.forEach(b => {
-      b.vy += 0.4; // gravity
-      b.x += b.vx; b.y += b.vy;
-
-      if (b.y + b.r > H) { b.y = H - b.r; b.vy *= -b.bounce; b.vx *= 0.97; }
-      if (b.x - b.r < 0) { b.x = b.r; b.vx *= -0.8; }
-      if (b.x + b.r > W) { b.x = W - b.r; b.vx *= -0.8; }
-
-      const g = ctx.createRadialGradient(b.x-b.r*0.3, b.y-b.r*0.3, 1, b.x, b.y, b.r);
-      g.addColorStop(0, '#fff');
-      g.addColorStop(0.4, b.color);
-      g.addColorStop(1, b.color+'44');
-      ctx.beginPath();
-      ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
-      ctx.fillStyle = g;
-      ctx.shadowColor = b.color;
-      ctx.shadowBlur = 15;
-      ctx.fill();
-      ctx.shadowBlur = 0;
+      b.vy+=0.45;
+      b.x+=b.vx; b.y+=b.vy;
+      if (b.y+b.r>H) { b.y=H-b.r; b.vy*=-b.bounce; b.vx*=0.97; if(Math.abs(b.vy)<0.5) b.vy=0; }
+      if (b.x-b.r<0) { b.x=b.r; b.vx*=-0.8; }
+      if (b.x+b.r>W) { b.x=W-b.r; b.vx*=-0.8; }
     });
-    if (balls.length > 40) balls.shift();
+    resolveCollisions();
+
+    balls.forEach(b => {
+      // Shadow / glow
+      ctx.shadowColor=b.color; ctx.shadowBlur=18;
+      const g=ctx.createRadialGradient(b.x-b.r*.35,b.y-b.r*.35,1,b.x,b.y,b.r);
+      g.addColorStop(0,'#fff'); g.addColorStop(.35,b.color); g.addColorStop(1,b.color+'22');
+      ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+      ctx.fillStyle=g; ctx.fill();
+      ctx.shadowBlur=0;
+      // Hitbox outline (subtle)
+      ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+      ctx.strokeStyle=b.color+'55'; ctx.lineWidth=1.5; ctx.stroke();
+    });
     requestAnimationFrame(tick);
-  }
-  tick();
+  })();
+
+  return { clear: () => balls.length=0 };
 })();
 
 /* ════════════════════════════════════════════
    TYPEWRITER
 ════════════════════════════════════════════ */
-let typeTimer = null;
+let typeTimer=null;
 function startType() {
-  const text = document.getElementById('type-input').value.trim();
-  if (!text) return;
+  const text=document.getElementById('type-input').value.trim(); if(!text) return;
   clearInterval(typeTimer);
-  const el = document.getElementById('type-display');
-  el.innerHTML = '<span class="cursor"></span>';
-  let i = 0;
-  typeTimer = setInterval(() => {
-    if (i >= text.length) { clearInterval(typeTimer); return; }
-    el.innerHTML = text.slice(0, ++i) + '<span class="cursor"></span>';
-  }, 60);
+  const el=document.getElementById('type-display');
+  el.innerHTML='<span class="cursor"></span>'; let i=0;
+  typeTimer=setInterval(()=>{
+    if(i>=text.length){clearInterval(typeTimer);return;}
+    el.innerHTML=text.slice(0,++i)+'<span class="cursor"></span>';
+  },60);
 }
-document.getElementById('type-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') startType();
-});
+document.getElementById('type-input').addEventListener('keydown',e=>{if(e.key==='Enter')startType();});
 
 /* ════════════════════════════════════════════
    TEXT SCRAMBLE
 ════════════════════════════════════════════ */
-const CHARS = '!@#$%^&*<>?/\\|[]{}ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+const SCHARS='!@#$%^&*<>?/\\|[]{}ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 function startScramble() {
-  const target = document.getElementById('scramble-input').value.trim() || 'Hello World';
-  const el = document.getElementById('scramble-display');
-  let iteration = 0;
-  const max = target.length * 8;
-  const interval = setInterval(() => {
-    el.textContent = target.split('').map((ch, i) => {
-      if (i < Math.floor(iteration / 8)) return ch;
-      return CHARS[Math.floor(Math.random() * CHARS.length)];
-    }).join('');
-    if (++iteration > max) { el.textContent = target; clearInterval(interval); }
-  }, 30);
+  const target=document.getElementById('scramble-input').value.trim()||'Hello World';
+  const el=document.getElementById('scramble-display');
+  let it=0; const max=target.length*8;
+  const iv=setInterval(()=>{
+    el.textContent=target.split('').map((ch,i)=>i<Math.floor(it/8)?ch:SCHARS[Math.floor(Math.random()*SCHARS.length)]).join('');
+    if(++it>max){el.textContent=target;clearInterval(iv);}
+  },30);
 }
 
 /* ════════════════════════════════════════════
-   MATRIX RAIN
+   FIREWORKS
 ════════════════════════════════════════════ */
 (function() {
-  const canvas = document.getElementById('matrix-canvas');
-  const ctx = canvas.getContext('2d');
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
-  const W = canvas.width, H = canvas.height;
-  const cols = Math.floor(W / 16);
-  const drops = Array(cols).fill(0);
-  let running = true;
+  const canvas=document.getElementById('fireworks-canvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight;
+  const W=canvas.width, H=canvas.height;
+  const rockets=[], particles=[];
+  const FCOLORS=['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#c77dff','#ff9a3c','#00f5d4','#f72585'];
 
-  canvas.addEventListener('click', () => { running = !running; });
+  canvas.addEventListener('click', e => {
+    const r=canvas.getBoundingClientRect();
+    const tx=e.clientX-r.left, ty=e.clientY-r.top;
+    rockets.push({x:W/2+( Math.random()-.5)*100, y:H, tx, ty, vx:0, vy:0, color:FCOLORS[Math.floor(Math.random()*FCOLORS.length)], trail:[]});
+  });
 
-  function draw() {
-    ctx.fillStyle = 'rgba(0,13,2,0.05)';
-    ctx.fillRect(0,0,W,H);
-    ctx.fillStyle = '#0f0';
-    ctx.font = '14px monospace';
-    drops.forEach((y, i) => {
-      const ch = String.fromCharCode(0x30A0 + Math.random()*96);
-      ctx.fillStyle = y === 1 ? '#aaffaa' : '#00ff41';
-      ctx.fillText(ch, i*16, y*16);
-      if (y*16 > H && Math.random() > 0.975) drops[i] = 0;
-      else drops[i]++;
+  // Auto-launch occasionally
+  setInterval(()=>{
+    if(rockets.length<3) rockets.push({
+      x:Math.random()*W*.8+W*.1, y:H,
+      tx:Math.random()*W*.6+W*.2, ty:Math.random()*H*.5+20,
+      color:FCOLORS[Math.floor(Math.random()*FCOLORS.length)], trail:[]
     });
-    setTimeout(() => { if (running) requestAnimationFrame(draw); }, 40);
+  }, 2200);
+
+  function explode(rx,ry,color) {
+    const count=100+Math.random()*80;
+    for(let i=0;i<count;i++){
+      const angle=Math.random()*Math.PI*2, speed=Math.random()*5+1.5;
+      particles.push({x:rx,y:ry,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:1,color,r:Math.random()*2.5+1});
+    }
+    // Second burst - ring
+    for(let i=0;i<40;i++){
+      const angle=(i/40)*Math.PI*2, speed=3.5+Math.random();
+      particles.push({x:rx,y:ry,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:1,color:'#fff',r:1.5});
+    }
   }
 
-  // Toggle
-  canvas.addEventListener('click', () => {
-    if (running) { running = false; }
-    else { running = true; draw(); }
-  });
-  draw();
+  (function tick() {
+    ctx.fillStyle='rgba(8,8,16,.18)'; ctx.fillRect(0,0,W,H);
+
+    // Rockets
+    for(let i=rockets.length-1;i>=0;i--){
+      const r=rockets[i];
+      const dx=r.tx-r.x, dy=r.ty-r.y;
+      const dist=Math.hypot(dx,dy);
+      r.vx+=dx/dist*1.2; r.vy+=dy/dist*1.2;
+      r.vx*=.88; r.vy*=.88;
+      r.trail.push({x:r.x,y:r.y});
+      if(r.trail.length>12) r.trail.shift();
+      r.x+=r.vx; r.y+=r.vy;
+      // Draw trail
+      r.trail.forEach((pt,ti)=>{
+        ctx.beginPath(); ctx.arc(pt.x,pt.y,1.5*(ti/r.trail.length),0,Math.PI*2);
+        ctx.fillStyle=r.color+(Math.floor(ti/r.trail.length*99).toString(16).padStart(2,'0')); ctx.fill();
+      });
+      // Draw rocket
+      ctx.beginPath(); ctx.arc(r.x,r.y,3,0,Math.PI*2);
+      ctx.fillStyle='#fff'; ctx.shadowColor='#fff'; ctx.shadowBlur=10; ctx.fill(); ctx.shadowBlur=0;
+      if(dist<14) { explode(r.x,r.y,r.color); rockets.splice(i,1); }
+    }
+
+    // Particles
+    for(let i=particles.length-1;i>=0;i--){
+      const p=particles[i];
+      p.vy+=.06; p.vx*=.97; p.vy*=.97;
+      p.x+=p.vx; p.y+=p.vy; p.life-=.018;
+      if(p.life<=0){particles.splice(i,1);continue;}
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r*p.life,0,Math.PI*2);
+      ctx.fillStyle=p.color+Math.floor(p.life*255).toString(16).padStart(2,'0'); ctx.fill();
+    }
+    if(particles.length>2000) particles.splice(0,200);
+    requestAnimationFrame(tick);
+  })();
 })();
 
 /* ════════════════════════════════════════════
    SNOW
 ════════════════════════════════════════════ */
 (function() {
-  const canvas = document.getElementById('snow-canvas');
-  const ctx = canvas.getContext('2d');
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
-  const W = canvas.width, H = canvas.height;
-  let flakes = [];
+  const canvas=document.getElementById('snow-canvas'), ctx=canvas.getContext('2d');
+  canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight;
+  const W=canvas.width, H=canvas.height;
+  let flakes=[];
+  const mk=()=>({x:Math.random()*W,y:Math.random()*-H,r:Math.random()*4+1,speed:Math.random()*1.5+.5,drift:(Math.random()-.5)*.5,opacity:Math.random()*.6+.4});
+  const sync=()=>{const t=+document.getElementById('snow-intensity').value;while(flakes.length<t)flakes.push(mk());if(flakes.length>t)flakes.length=t;};
+  sync(); document.getElementById('snow-intensity').addEventListener('input',sync);
+  (function tick(){
+    ctx.clearRect(0,0,W,H);
+    const sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#0d1020');sky.addColorStop(1,'#1a2050');
+    ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
+    ctx.beginPath();ctx.arc(W-60,40,22,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,255,220,.9)';ctx.shadowColor='#ffffc0';ctx.shadowBlur=30;ctx.fill();ctx.shadowBlur=0;
+    flakes.forEach(f=>{f.x+=f.drift;f.y+=f.speed;if(f.y>H){f.y=-10;f.x=Math.random()*W;}
+      ctx.beginPath();ctx.arc(f.x,f.y,f.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${f.opacity})`;ctx.fill();});
+    requestAnimationFrame(tick);
+  })();
+})();
 
-  function makeFlake() {
+/* ════════════════════════════════════════════
+   LISSAJOUS CURVES
+════════════════════════════════════════════ */
+let lisAnimate=true;
+(function(){
+  const canvas=document.getElementById('lis-canvas'), ctx=canvas.getContext('2d');
+  canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight;
+  const W=canvas.width, H=canvas.height;
+  const aEl=document.getElementById('lis-a'), bEl=document.getElementById('lis-b'), dEl=document.getElementById('lis-d');
+  let phase=0;
+
+  ['lis-a','lis-b','lis-d'].forEach(id=>{
+    document.getElementById(id).addEventListener('input',()=>{
+      document.getElementById('lis-a-val').textContent=aEl.value;
+      document.getElementById('lis-b-val').textContent=bEl.value;
+      const dv=+dEl.value/100;
+      document.getElementById('lis-d-val').textContent=dv.toFixed(2)+'π';
+    });
+  });
+
+  (function tick(){
+    ctx.fillStyle='rgba(3,3,8,.12)';ctx.fillRect(0,0,W,H);
+    const a=+aEl.value, b=+bEl.value, delta=(+dEl.value/100)*Math.PI;
+    const rx=W*.42, ry=H*.42;
+    const steps=2000;
+    ctx.beginPath();
+    for(let i=0;i<=steps;i++){
+      const t=(i/steps)*Math.PI*2;
+      const x=W/2+rx*Math.sin(a*t+delta+phase);
+      const y=H/2+ry*Math.sin(b*t);
+      const hue=(i/steps)*360;
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    const grad=ctx.createLinearGradient(0,0,W,H);
+    grad.addColorStop(0,'#6366f1'); grad.addColorStop(.5,'#38bdf8'); grad.addColorStop(1,'#a78bfa');
+    ctx.strokeStyle=grad; ctx.lineWidth=1.8; ctx.stroke();
+    if(lisAnimate) phase+=0.008;
+    requestAnimationFrame(tick);
+  })();
+})();
+
+/* ════════════════════════════════════════════
+   CONWAY'S GAME OF LIFE
+════════════════════════════════════════════ */
+(function(){
+  const canvas=document.getElementById('gol-canvas'), ctx=canvas.getContext('2d');
+  canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight;
+  const W=canvas.width, H=canvas.height;
+  const CELL=8, COLS=Math.floor(W/CELL), ROWS=Math.floor(H/CELL);
+  let grid=new Uint8Array(COLS*ROWS);
+  let running=false, drawing=false, lastDraw=-1;
+
+  const idx=(c,r)=>((r+ROWS)%ROWS)*COLS+((c+COLS)%COLS);
+  const neighbors=(c,r)=>[-1,0,1].flatMap(dc=>[-1,0,1].filter(dr=>dc||dr).map(dr=>grid[idx(c+dc,r+dr)])).reduce((a,b)=>a+b,0);
+
+  window.golRandom=()=>{for(let i=0;i<COLS*ROWS;i++)grid[i]=Math.random()<.28?1:0;};
+  window.golClear=()=>{grid.fill(0);};
+  window.golStep=()=>{
+    const next=new Uint8Array(COLS*ROWS);
+    for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++){
+      const n=neighbors(c,r), alive=grid[idx(c,r)];
+      next[idx(c,r)]=(alive&&(n===2||n===3))||(!alive&&n===3)?1:0;
+    }
+    grid=next;
+  };
+  window.golToggle=()=>{
+    running=!running;
+    document.querySelector('.gol-controls button.success').textContent=running?'Stop':'Start';
+  };
+
+  let tick=0;
+  const getCell=e=>{const r=canvas.getBoundingClientRect();return{c:Math.floor((e.clientX-r.left)/CELL),r:Math.floor((e.clientY-r.top)/CELL)};};
+  canvas.addEventListener('mousedown',e=>{drawing=true;const{c,r}=getCell(e);grid[idx(c,r)]=1;lastDraw=idx(c,r);});
+  canvas.addEventListener('mouseup',()=>drawing=false);
+  canvas.addEventListener('mousemove',e=>{if(!drawing)return;const{c,r}=getCell(e);const i=idx(c,r);if(i!==lastDraw){grid[i]=1;lastDraw=i;}});
+
+  golRandom();
+
+  (function loop(){
+    if(running&&tick++%6===0) golStep();
+    ctx.fillStyle='#08080f'; ctx.fillRect(0,0,W,H);
+    for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++){
+      if(grid[idx(c,r)]){
+        const x=c*CELL, y=r*CELL;
+        ctx.fillStyle='#6366f1'; ctx.fillRect(x+1,y+1,CELL-2,CELL-2);
+      }
+    }
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ════════════════════════════════════════════
+   BALL RACE TRACK
+════════════════════════════════════════════ */
+const raceModule=(function(){
+  const canvas=document.getElementById('race-canvas'), ctx=canvas.getContext('2d');
+  canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight;
+  const W=canvas.width, H=canvas.height;
+  const TRACK_COLORS=['#f43f5e','#6366f1','#4ade80','#fb923c','#38bdf8','#facc15','#a78bfa','#ec4899'];
+  const NAMES=['Red','Indigo','Green','Orange','Cyan','Yellow','Violet','Pink'];
+
+  // Oval track parameters
+  const CX=W/2, CY=H/2+10;
+  const RX=W*.38, RY=H*.36;
+  const TRACK_W=38;
+
+  // Get point on oval at parameter t (0-1)
+  function trackPoint(t) {
+    const a=t*Math.PI*2-Math.PI/2;
     return {
-      x: Math.random() * W,
-      y: Math.random() * -H,
-      r: Math.random() * 4 + 1,
-      speed: Math.random() * 1.5 + 0.5,
-      drift: (Math.random() - 0.5) * 0.5,
-      opacity: Math.random() * 0.6 + 0.4,
+      x: CX+RX*Math.cos(a),
+      y: CY+RY*Math.sin(a),
+      tx: -Math.sin(a), ty: Math.cos(a), // tangent
     };
   }
 
-  function syncFlakes() {
-    const target = +document.getElementById('snow-intensity').value;
-    while (flakes.length < target) flakes.push(makeFlake());
-    if (flakes.length > target) flakes.length = target;
+  let racers=[];
+  let frameCount=0;
+
+  function addRacer() {
+    if(racers.length>=8) return;
+    const i=racers.length;
+    racers.push({
+      t: i*(1/8),          // staggered start positions
+      speed: 0.003+Math.random()*0.0018,
+      baseSpeed: 0.003+Math.random()*0.0018,
+      color: TRACK_COLORS[i],
+      name: NAMES[i],
+      laps: 0,
+      boost: 0,
+      finished: false,
+    });
   }
-  syncFlakes();
-  document.getElementById('snow-intensity').addEventListener('input', syncFlakes);
 
-  // Ground accumulation
-  const ground = new Array(W).fill(H);
+  // Click on ball to boost
+  canvas.addEventListener('click', e => {
+    const r=canvas.getBoundingClientRect();
+    const mx=e.clientX-r.left, my=e.clientY-r.top;
+    racers.forEach(b => {
+      const pt=trackPoint(b.t);
+      if(Math.hypot(mx-pt.x,my-pt.y)<16) b.boost=120;
+    });
+  });
 
-  function tick() {
+  function drawTrack() {
+    // Outer ellipse fill (track surface)
+    ctx.beginPath(); ctx.ellipse(CX,CY,RX+TRACK_W,RY+TRACK_W,0,0,Math.PI*2);
+    ctx.fillStyle='#1a1a2e'; ctx.fill();
+
+    // Outer border
+    ctx.beginPath(); ctx.ellipse(CX,CY,RX+TRACK_W,RY+TRACK_W,0,0,Math.PI*2);
+    ctx.strokeStyle='#ffffff22'; ctx.lineWidth=2; ctx.stroke();
+
+    // Inner hole (grass)
+    ctx.beginPath(); ctx.ellipse(CX,CY,RX-TRACK_W,RY-TRACK_W,0,0,Math.PI*2);
+    ctx.fillStyle='#0a150a'; ctx.fill();
+    ctx.strokeStyle='#ffffff22'; ctx.lineWidth=2; ctx.stroke();
+
+    // Center lane dashes
+    ctx.setLineDash([18,14]);
+    ctx.beginPath(); ctx.ellipse(CX,CY,RX,RY,0,0,Math.PI*2);
+    ctx.strokeStyle='rgba(255,255,255,.12)'; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Start/finish line
+    const sf=trackPoint(0);
+    ctx.save(); ctx.translate(sf.x,sf.y); ctx.rotate(Math.atan2(sf.ty,sf.tx));
+    ctx.fillStyle='#fff';
+    for(let i=0;i<4;i++) for(let j=0;j<2;j++) {
+      if((i+j)%2===0) ctx.fillRect(-TRACK_W+(j*TRACK_W),i*6-12,TRACK_W,6);
+    }
+    ctx.restore();
+  }
+
+  function updateBoard() {
+    const sorted=[...racers].sort((a,b)=>b.laps+b.t-(a.laps+a.t));
+    document.getElementById('race-board').innerHTML=sorted.map((r,i)=>
+      `<div class="racer-pill"><div class="racer-dot" style="background:${r.color}"></div>${i+1}. ${r.name} — Lap ${r.laps+1}</div>`
+    ).join('');
+  }
+
+  (function tick() {
     ctx.clearRect(0,0,W,H);
 
-    // Sky gradient
-    const sky = ctx.createLinearGradient(0,0,0,H);
-    sky.addColorStop(0,'#0d1020'); sky.addColorStop(1,'#1a2050');
-    ctx.fillStyle = sky; ctx.fillRect(0,0,W,H);
+    // Dark background
+    ctx.fillStyle='#080810'; ctx.fillRect(0,0,W,H);
 
-    // Moon
-    ctx.beginPath(); ctx.arc(W-60, 40, 22, 0, Math.PI*2);
-    ctx.fillStyle='rgba(255,255,220,0.9)'; ctx.fill();
-    ctx.shadowColor='#ffffc0'; ctx.shadowBlur=30; ctx.fill(); ctx.shadowBlur=0;
+    drawTrack();
 
-    // Snow
-    flakes.forEach(f => {
-      f.x += f.drift; f.y += f.speed;
-      if (f.y > H) { f.y = -10; f.x = Math.random()*W; }
-      ctx.beginPath();
-      ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(255,255,255,${f.opacity})`;
-      ctx.fill();
+    racers.forEach(b => {
+      if(b.boost>0) { b.boost--; b.t+=b.baseSpeed*1.8; }
+      else b.t+=b.speed;
+      if(b.t>=1) { b.t-=1; b.laps++; }
+
+      const pt=trackPoint(b.t);
+
+      // Draw trail
+      for(let ti=1;ti<=8;ti++){
+        const tt=b.t-ti*0.004;
+        const tp=trackPoint(((tt%1)+1)%1);
+        ctx.beginPath(); ctx.arc(tp.x,tp.y,(8-ti)*.8,0,Math.PI*2);
+        ctx.fillStyle=b.color+(Math.floor((1-ti/8)*60).toString(16).padStart(2,'0')); ctx.fill();
+      }
+
+      // Glow
+      ctx.shadowColor=b.color; ctx.shadowBlur=b.boost>0?28:14;
+      // Ball
+      const g=ctx.createRadialGradient(pt.x-5,pt.y-5,1,pt.x,pt.y,13);
+      g.addColorStop(0,'#fff'); g.addColorStop(.4,b.color); g.addColorStop(1,b.color+'44');
+      ctx.beginPath(); ctx.arc(pt.x,pt.y,13,0,Math.PI*2);
+      ctx.fillStyle=g; ctx.fill();
+      ctx.shadowBlur=0;
+
+      // Boost flame
+      if(b.boost>0) {
+        ctx.beginPath(); ctx.arc(pt.x-pt.tx*10,pt.y-pt.ty*10,5+Math.random()*4,0,Math.PI*2);
+        ctx.fillStyle='#fb923c'; ctx.fill();
+      }
     });
 
+    if(frameCount++%30===0) updateBoard();
     requestAnimationFrame(tick);
-  }
-  tick();
+  })();
+
+  // Start with 4 racers
+  for(let i=0;i<4;i++) addRacer();
+
+  return { add: addRacer, reset: ()=>{ racers=[]; for(let i=0;i<4;i++) addRacer(); } };
 })();
+
+window.raceAddBall = () => raceModule.add();
+window.raceReset  = () => raceModule.reset();
 
 /* ════════════════════════════════════════════
    AUDIO VISUALIZER
 ════════════════════════════════════════════ */
-let vizActive = false, analyser = null, vizData = null;
-const vizCanvas = document.getElementById('viz-canvas');
-const vizCtx = vizCanvas.getContext('2d');
-vizCanvas.width = vizCanvas.offsetWidth;
-vizCanvas.height = vizCanvas.offsetHeight;
+let vizActive=false,analyser=null,vizData=null;
+const vizCanvas=document.getElementById('viz-canvas'),vizCtx=vizCanvas.getContext('2d');
+vizCanvas.width=vizCanvas.offsetWidth; vizCanvas.height=vizCanvas.offsetHeight;
 
-function toggleViz() {
-  if (vizActive) {
-    vizActive = false;
-    document.getElementById('viz-btn').textContent = 'Enable Mic';
-    return;
-  }
-  navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-    const ctx = new AudioContext();
-    analyser = ctx.createAnalyser();
-    analyser.fftSize = 256;
-    ctx.createMediaStreamSource(stream).connect(analyser);
-    vizData = new Uint8Array(analyser.frequencyBinCount);
-    vizActive = true;
-    document.getElementById('viz-btn').textContent = 'Disable Mic';
-    drawViz();
-  }).catch(() => alert('Microphone access denied.'));
+function toggleViz(){
+  if(vizActive){vizActive=false;document.getElementById('viz-btn').textContent='Enable Mic';return;}
+  navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+    const ac=new AudioContext(); analyser=ac.createAnalyser(); analyser.fftSize=256;
+    ac.createMediaStreamSource(stream).connect(analyser);
+    vizData=new Uint8Array(analyser.frequencyBinCount);
+    vizActive=true; document.getElementById('viz-btn').textContent='Disable Mic'; drawViz();
+  }).catch(()=>alert('Microphone access denied.'));
 }
 
-function drawViz() {
-  if (!vizActive) return;
+function drawViz(){
+  if(!vizActive) return;
   requestAnimationFrame(drawViz);
   analyser.getByteFrequencyData(vizData);
-  const W = vizCanvas.width, H = vizCanvas.height;
-  const gain = +document.getElementById('viz-gain').value;
+  const W=vizCanvas.width,H=vizCanvas.height,gain=+document.getElementById('viz-gain').value;
   vizCtx.clearRect(0,0,W,H);
-  const bw = W / vizData.length;
-  vizData.forEach((v, i) => {
-    const h = Math.min((v / 255) * H * gain, H);
-    const hue = (i / vizData.length) * 280 + 200;
-    vizCtx.fillStyle = `hsl(${hue},80%,60%)`;
-    vizCtx.fillRect(i*bw, H-h, bw-1, h);
+  const bw=W/vizData.length;
+  vizData.forEach((v,i)=>{
+    const h=Math.min((v/255)*H*gain,H);
+    const hue=(i/vizData.length)*280+200;
+    vizCtx.fillStyle=`hsl(${hue},80%,60%)`;
+    vizCtx.fillRect(i*bw,H-h,bw-1,h);
   });
 }
 </script>
